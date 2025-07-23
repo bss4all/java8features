@@ -1,7 +1,5 @@
 package com.bss.j8p.strings;
 
-import java.util.Arrays;
-
 public class ReplaceCharInStringWithItsOccurence {
 
 	public static void main(String[] args) {

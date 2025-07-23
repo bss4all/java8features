@@ -104,6 +104,12 @@ public class EmployeeList {
 		emp = new Employee(4, "Reddy", 40, 8000.00, "HR", 14);
 		empList.add(emp);
 
+		emp = new Employee(5, "Rao", 40, 9000.00, "HR", 15);
+		empList.add(emp);
+
+		emp = new Employee(6, "Sharma", 30, 30000.00, "Dev", 16);
+		empList.add(emp);
+
 		empList.stream().filter(e -> e.getDepartment().startsWith("D")).forEach(f -> System.out.println(f.getName()));
 
 		empList.stream().filter(e -> e.getDepartment().equalsIgnoreCase("test")).filter(e -> e.getAge() > 25)
@@ -131,8 +137,7 @@ public class EmployeeList {
 
 		empList.stream().sorted(sortByName.thenComparing(sortByAge).thenComparing(sortBySalary))
 				.forEach(e -> System.out.println(e));
+		// Group by department
 
-//		Map<String, Employee> topEmployees = empList.stream().collect(
-//				groupingBy(e -> e.department, collectingAndThen(maxBy(comparingDouble(e -> e.salary)), Optional::get)));
 	}
 }
