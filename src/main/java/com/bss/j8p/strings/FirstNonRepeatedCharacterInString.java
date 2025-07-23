@@ -1,8 +1,12 @@
 package com.bss.j8p.strings;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FirstNonRepeatedCharacterInString {
 
@@ -42,6 +46,17 @@ public class FirstNonRepeatedCharacterInString {
 				break;
 			}
 		}
+		
+		
+		System.out.println("3 - with Java 8 Streams");
+		name.chars().mapToObj(c -> (char) c)
+				.collect(java.util.stream.Collectors.groupingBy(c -> c, java.util.stream.Collectors.counting()))
+				.entrySet().stream().filter(ele -> ele.getValue() == 1).map(Entry::getKey).findFirst()
+				.ifPresent(System.out::println);
+		List<String> arr = Arrays.asList(name.split(""));
+		arr.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+		.entrySet().stream().filter(ele -> ele.getValue() == 1).findFirst().ifPresent(System.out::println);
+		
 	}
 
 }
