@@ -3,5 +3,7 @@
   <groupId>java8features</groupId>
   <artifactId>java8features</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+  <properties>
+    <java.version>21</java.version>
+  </properties>
 </project>
