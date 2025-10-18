@@ -6,10 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.maxBy;
+import java.util.stream.Collectors;
 
 class Employee {
 	private Integer id;
@@ -95,23 +92,37 @@ public class EmployeeList {
 		Employee emp = new Employee(1, "Kumar", 25, 10000.00, "Dev", 11);
 		empList.add(emp);
 
-		emp = new Employee(2, "Raju", 35, 20000.00, "Dev", 12);
+		emp = new Employee(2, "Raju", 35, 20000.00, "Dev", 11);
 		empList.add(emp);
 
 		emp = new Employee(3, "Kapoor", 45, 30000.00, "Test", 13);
 		empList.add(emp);
 
-		emp = new Employee(4, "Reddy", 40, 8000.00, "HR", 14);
+		emp = new Employee(4, "Reddy", 40, 8000.00, "HR", 15);
 		empList.add(emp);
 
 		emp = new Employee(5, "Rao", 40, 9000.00, "HR", 15);
 		empList.add(emp);
 
-		emp = new Employee(6, "Sharma", 30, 30000.00, "Dev", 16);
+		emp = new Employee(6, "Sharma", 30, 30000.00, "Dev", 11);
 		empList.add(emp);
 
+		emp = new Employee(7, "Yadav", 35, 40000.00, "Test", 13);
+		empList.add(emp);
+
+		emp = new Employee(8, "Devi", 30, 10000.00, "HR", 15);
+		empList.add(emp);
+
+		emp = new Employee(9, "Babbar", 25, 50000.00, "Test", 13);
+		empList.add(emp);
+
+		emp = new Employee(10, "Kohli", 30, 50000.00, "Test", 13);
+		empList.add(emp);
+
+		System.out.println("List of Employees whose Department starts with D");
 		empList.stream().filter(e -> e.getDepartment().startsWith("D")).forEach(f -> System.out.println(f.getName()));
 
+		System.out.println("List of Employees whose Department is Test and age > 25");
 		empList.stream().filter(e -> e.getDepartment().equalsIgnoreCase("test")).filter(e -> e.getAge() > 25)
 				.forEach(System.out::println);
 
@@ -137,7 +148,23 @@ public class EmployeeList {
 
 		empList.stream().sorted(sortByName.thenComparing(sortByAge).thenComparing(sortBySalary))
 				.forEach(e -> System.out.println(e));
-		// Group by department
+
+		// find highest salary employee in each department
+		System.out.println("find highest salary employee in each department");
+		Map<String, Optional<Employee>> highestPaidByDept = empList.stream()
+	            .collect(Collectors.groupingBy(
+	                Employee::getDepartment,
+	                Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))
+	            ));
+
+		System.out.println(highestPaidByDept);
+
+		// list of employees whose salary is less than 10000 and sort in descending order on name
+		System.out.println("list of employees whose salary is less than 10000 and sort in descending order on name");
+		empList.stream().filter(e -> e.getSalary() < 10000)
+		.sorted(Comparator.comparing(Employee::getName).reversed())
+		.forEach(System.out::println);
+
 
 	}
 }
